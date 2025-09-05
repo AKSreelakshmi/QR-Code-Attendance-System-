@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan QR</title>
+</head>
+<body>
+    <h2>QR Code Scanned</h2>
+    <form method="POST">
+        <input type="hidden" name="qr_code" value="{{ qr_code }}">
+        Student ID: <input type="text" name="student_id" required><br><br>
+        <input type="submit" value="Mark Attendance">
+    </form>
+</body>
+</html>
+

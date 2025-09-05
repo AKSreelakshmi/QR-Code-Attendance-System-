@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .low-attendance {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .report-container {
+            max-width: 900px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Attendance Report</h2>
+    <div class="report-container">
+        <p>Total Classes Conducted: <strong>{{ total_classes }}</strong></p>
+        <table border="1">
+            <tr>
+                <th>Student ID</th>
+                <th>Classes Attended</th>
+                <th>Classes Missed</th>
+                <th>Attendance %</th>
+                <th>Status</th>
+            </tr>
+            {% for r in reports %}
+            <tr class="{{ 'low-attendance' if r.status == 'Below 75%' else '' }}">
+                <td>{{ r.student_id }}</td>
+                <td>{{ r.attended }}</td>
+                <td>{{ r.missed }}</td>
+                <td>{{ r.percentage }}%</td>
+                <td>{{ r.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

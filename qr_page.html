@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function refreshQR() {
+            const img = document.getElementById("qr-img");
+            img.src = "/qrcode?" + new Date().getTime();
+        }
+        setInterval(refreshQR, 3000);
+        window.onload = refreshQR;
+    </script>
+</head>
+<body>
+    <h2>QR Code</h2>
+    <img id="qr-img" src="/qrcode" width="300" height="300">
+</body>
+</html>

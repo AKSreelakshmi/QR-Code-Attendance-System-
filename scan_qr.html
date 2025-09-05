@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Mark Your Attendance</h2>
+    <form method="POST" action="/scan" onsubmit="return handleSubmit()">
+        <input type="hidden" name="qr_code" id="qr_code" value="{{ qr_code }}">
+        Student ID: <input type="text" name="student_id" id="student_id" required><br><br>
+        <input type="submit" id="submit-btn" value="Submit Attendance">
+    </form>
+
+    <script>
+        const qrToken = "{{ qr_code }}";
+        const storageKey = "attendance_block_" + qrToken;
+        const now = Date.now();
+        const storedTime = localStorage.getItem(storageKey);
+        const button = document.getElementById("submit-btn");
+
+        // Immediately disable button if token was already used
+        if (storedTime && now - parseInt(storedTime) < 24 * 60 * 60 * 1000) {
+            button.disabled = true;
+            button.value = "Already Submitted";
+        }
+
+        function handleSubmit() {
+            localStorage.setItem(storageKey, Date.now().toString());
+
+            // Disable button instantly to prevent quick resubmit
+            button.disabled = true;
+            button.value = "Submitted";
+
+            return true;
+        }
+    </script>
+</body>
+</html>
